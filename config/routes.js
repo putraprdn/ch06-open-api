@@ -3,6 +3,10 @@ const controllers = require("../app/controllers");
 const { registerRules } = require("../app/validators/rule");
 const checkToken = require("../app/middlewares/checkToken");
 const validate = require("../app/middlewares/validate");
+const YAML = require("yamljs");
+const swaggerUI = require("swagger-ui-express");
+const apiDocs = YAML.load("./api-doc.yaml");
+
 
 const apiRouter = express.Router();
 
@@ -10,6 +14,8 @@ const apiRouter = express.Router();
  * TODO: Implement your own API
  *       implementations
  */
+apiRouter.use("/api-docs/v1", swaggerUI.serve, swaggerUI.setup(apiDocs));
+
 apiRouter.get("/api/v1/posts", controllers.api.v1.postController.list);
 apiRouter.post("/api/v1/posts", controllers.api.v1.postController.create);
 apiRouter.put("/api/v1/posts/:id", controllers.api.v1.postController.update);
