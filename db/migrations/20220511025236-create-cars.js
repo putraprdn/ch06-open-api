@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("cars", {
+		await queryInterface.createTable("Cars", {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -20,13 +20,14 @@ module.exports = {
 			image: {
 				type: Sequelize.STRING,
 			},
-			is_active: {
+			isActive: {
 				type: Sequelize.BOOLEAN,
 			},
-			size_id: {
+			sizeId: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
 				references: {
-					model: "car_sizes",
+					model: "CarSizes",
 					key: "id",
 				},
 				onUpdate: "CASCADE",
@@ -55,6 +56,6 @@ module.exports = {
 		});
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("cars");
+		await queryInterface.dropTable("Cars");
 	},
 };
