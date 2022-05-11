@@ -8,7 +8,7 @@ module.exports = {
 			},
 		});
 	},
-	register(body, encryptedPass) {
-		return User.create(body, encryptedPass);
+	register(reqBody) {
+		return User.create(reqBody);
 	},
 };

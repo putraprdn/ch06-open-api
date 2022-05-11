@@ -46,26 +46,92 @@ paths:
                                             properties:
                                                 id:
                                                     type: "integer"
-                                                name: 
+                                                name:
                                                     type: "string"
-                                                username: 
+                                                username:
                                                     type: "string"
-                                                email: 
+                                                email:
                                                     type: "string"
-                                                password: 
+                                                password:
                                                     type: "string"
-                                                isActive: 
+                                                isActive:
                                                     type: "boolean"
-                                                roleId: 
+                                                roleId:
                                                     type: "integer"
-                                                createdAt: 
+                                                createdAt:
                                                     type: "string"
                                                     format: "date-time"
-                                                updatedAt: 
+                                                updatedAt:
                                                     type: "string"
                                                     format: "date-time"
                                         token:
                                             type: "string"
+                                error:
+                                    type: "string"
+                "400":
+                    description: "Server Error"
+
+    /register:
+        post:
+            summary: "Register"
+            description: ""
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "name"
+                          - "username"
+                          - "email"
+                          - "password"
+                      properties:
+                          name:
+                              type: "string"
+                          username:
+                              type: "string"
+                          email:
+                              type: "string"
+                          password:
+                              type: "string"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                success:
+                                    type: "boolean"
+                                    default: true
+                                message:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    properties:
+                                        isActive:
+                                            type: "boolean"
+                                        roleId:
+                                            type: "integer"
+                                        id:
+                                            type: "integer"
+                                        name:
+                                            type: "string"
+                                        username:
+                                            type: "string"
+                                        email:
+                                            type: "string"
+                                        password:
+                                            type: "string"
+                                        updatedAt:
+                                            type: "string"
+                                            format: "date-time"
+                                        createdAt:
+                                            type: "string"
+                                            format: "date-time"
                                 error:
                                     type: "string"
                 "400":
