@@ -83,3 +83,5 @@ package-lock.json
 yarn.lock
 
 doc.txt
+
+app/controllers/api/v1/ad.js
