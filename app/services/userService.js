@@ -38,4 +38,8 @@ module.exports = {
 			throw err;
 		}
 	},
+	register(reqBody) {
+		const encryptedPass = cryptPassword(reqBody.password);
+		return userRepository.register(reqBody, encryptedPass);
+	},
 };

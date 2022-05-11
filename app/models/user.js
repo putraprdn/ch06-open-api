@@ -34,11 +34,11 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			isActive: {
 				type: DataTypes.BOOLEAN,
-				allowNull: false,
 				defaultValue: true,
 			},
 			roleId: {
 				type: DataTypes.INTEGER,
+				defaultValue: 3,
 			},
 		},
 		{

@@ -17,4 +17,20 @@ module.exports = {
 				});
 			});
 	},
+	register(req, res) {
+		userService
+			.register(req.body)
+			.then((user) => {
+				res.status(200).json({
+					status: "OK",
+					data: user,
+				});
+			})
+			.catch((err) => {
+				res.status(422).json({
+					status: "FAIL",
+					message: err.message,
+				});
+			});
+	},
 };
