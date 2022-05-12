@@ -154,8 +154,8 @@ paths:
             security:
                 - bearerAuth: []
 
-    # Create car 
-    /car:
+    # Create car
+    /car/create:
         post:
             summary: "Create car data"
             description: ""
@@ -193,6 +193,98 @@ paths:
                                 data:
                                     type: "object"
                                     $ref: "#/definitions/carProperties"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    # Update car
+    /car/update:
+        put:
+            summary: "Update car data by id"
+            description: ""
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "id"
+                          - "name"
+                          - "description"
+                          - "price"
+                          - "sizeId"
+                          - "image"
+                      properties:
+                          id:
+                              type: "integer"
+                          name:
+                              type: "string"
+                          description:
+                              type: "string"
+                          price:
+                              type: "integer"
+                          sizeId:
+                              type: "integer"
+                          image:
+                              type: "string"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    $ref: "#/definitions/carProperties"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    # Get car by id
+    /car/find:
+        post:
+            summary: "Update car data by id"
+            description: ""
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "id"
+                      properties:
+                          id:
+                              type: "integer"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    properties:
+                                        cars:
+                                            type: "array"
+                                            items:
+                                                type: "object"
+                                                $ref: "#/definitions/carProperties"
                 "400":
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
@@ -240,7 +332,7 @@ definitions:
                         type: "string"
                     message:
                         type: "string"
-    # carProperties 
+    # carProperties
     carProperties:
         properties:
             id:
@@ -274,4 +366,3 @@ definitions:
             updatedAt:
                 type: "string"
                 format: "date-time"
-
