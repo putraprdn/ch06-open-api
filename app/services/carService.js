@@ -5,7 +5,7 @@ module.exports = {
 		try {
 			const cars = await carRepository.list();
 			return {
-				data: cars,
+				cars,
 			};
 		} catch (err) {
 			throw err;
@@ -28,6 +28,8 @@ module.exports = {
 				isActive: cars.isActive,
 				createdBy: cars.createdBy,
 				updatedBy: cars.updatedBy,
+				deletedBy: cars.deletedBy,
+				deletedAt: cars.deletedAt,
 				createdAt: cars.createdAt,
 				updateAt: cars.updatedAt,
 			};
