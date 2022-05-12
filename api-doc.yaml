@@ -172,6 +172,7 @@ paths:
                           - "description"
                           - "price"
                           - "image"
+                          - "sizeId"
                       properties:
                           name:
                               type: "string"
@@ -181,6 +182,8 @@ paths:
                               type: "integer"
                           image:
                               type: "string"
+                          sizeId:
+                              type: "integer"
             responses:
                 "200":
                     description: "OK"
