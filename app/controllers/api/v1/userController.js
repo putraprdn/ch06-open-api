@@ -49,7 +49,7 @@ module.exports = {
 			let token = req.headers.authorization;
 
 			if (!token) throw new Error("Please Provide a Token");
-			
+
 			if (token.toLowerCase().startsWith("bearer")) {
 				token = token.slice("bearer".length).trim();
 			}
@@ -67,6 +67,17 @@ module.exports = {
 			res.status(422).json({
 				status: "FAIL",
 				message: error.message,
+			});
+		}
+	},
+	async isAdmin(req, res, next) {
+		try {
+			await userService.isAdmin(res.user);
+			next();
+		} catch (err) {
+			res.status(422).json({
+				status: "FAIL",
+				message: err.message,
 			});
 		}
 	},

@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const userRepository = require("../repositories/userRepository"),
 	{ genSalt, hash, compareSync } = require("bcrypt"),
 	jwt = require("jsonwebtoken");
@@ -65,5 +66,16 @@ module.exports = {
 				updatedAt: userRegistered.updatedAt,
 			},
 		};
+	},
+	async isAdmin(userInfo) {
+		try {
+			const verified = await userRepository.isAdmin(userInfo.id);
+
+			if (!verified) throw new Error("Unauthorized Access");
+
+			res.user = verified;
+		} catch (err) {
+			throw err;
+		}
 	},
 };
