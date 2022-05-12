@@ -6,7 +6,7 @@ info:
 host: "localhost:3000"
 basePath: "/api/v1"
 paths:
-    # USERS
+    # ---- USERS
     /login:
         post:
             summary: "Login"
@@ -123,7 +123,8 @@ paths:
             security:
                 - bearerAuth: []
 
-    # CARS
+    # ---- CARS
+    # Get all cars
     /cars:
         get:
             summary: "Get car lists"
@@ -146,38 +147,52 @@ paths:
                                             type: "array"
                                             items:
                                                 type: "object"
-                                                properties:
-                                                    id:
-                                                        type: "integer"
-                                                    sizeId:
-                                                        type: "integer"
-                                                    name:
-                                                        type: "string"
-                                                    description:
-                                                        type: "string"
-                                                    price:
-                                                        type: "integer"
-                                                    image:
-                                                        type: "string"
-                                                    isActive:
-                                                        type: "boolean"
-                                                    createdBy:
-                                                        type: "string"
-                                                    updatedBy:
-                                                        type: "string"
-                                                    deletedBy:
-                                                        type: "string"
-                                                        nullable: true
-                                                    deletedAt:
-                                                        type: "string"
-                                                        nullable: true
-                                                        format: "date-time"
-                                                    createdAt:
-                                                        type: "string"
-                                                        format: "date-time"
-                                                    updatedAt:
-                                                        type: "string"
-                                                        format: "date-time"
+                                                $ref: "#/definitions/carProperties"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    # Create car 
+    /car:
+        post:
+            summary: "Create car data"
+            description: ""
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "name"
+                          - "description"
+                          - "price"
+                          - "image"
+                      properties:
+                          name:
+                              type: "string"
+                          description:
+                              type: "string"
+                          price:
+                              type: "integer"
+                          image:
+                              type: "string"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    $ref: "#/definitions/carProperties"
                 "400":
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
@@ -225,3 +240,38 @@ definitions:
                         type: "string"
                     message:
                         type: "string"
+    # carProperties 
+    carProperties:
+        properties:
+            id:
+                type: "integer"
+            sizeId:
+                type: "integer"
+            name:
+                type: "string"
+            description:
+                type: "string"
+            price:
+                type: "integer"
+            image:
+                type: "string"
+            isActive:
+                type: "boolean"
+            createdBy:
+                type: "string"
+            updatedBy:
+                type: "string"
+            deletedBy:
+                type: "string"
+                nullable: true
+            deletedAt:
+                type: "string"
+                nullable: true
+                format: "date-time"
+            createdAt:
+                type: "string"
+                format: "date-time"
+            updatedAt:
+                type: "string"
+                format: "date-time"
+
