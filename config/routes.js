@@ -35,6 +35,7 @@ apiRouter.get("/api/v1/cars", controllers.api.v1.userController.checkToken, cont
 apiRouter.post("/api/v1/car/create", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.create);
 apiRouter.put("/api/v1/car/update", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.update);
 apiRouter.post("/api/v1/car/find", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.find);
+apiRouter.put("/api/v1/car/delete", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.destroy);
 
 
 module.exports = apiRouter;

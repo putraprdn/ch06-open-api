@@ -2,7 +2,11 @@ const { Car } = require("../models");
 
 module.exports = {
 	list() {
-		return Car.findAll();
+		return Car.findAll({
+			where: {
+				isActive: true,
+			},
+		});
 	},
 	create(requestBody) {
 		return Car.create(requestBody);
@@ -20,11 +24,31 @@ module.exports = {
 			{
 				where: {
 					id,
+					isActive: true,
 				},
 			}
 		);
 	},
 	find(id) {
-		return Car.findByPk(id);
+		return Car.findOne({
+			where: {
+				id,
+				isActive: true,
+			},
+		});
+	},
+	destroy(id, user) {
+		return Car.update(
+			{
+				isActive: false,
+				deletedBy: user,
+				deletedAt: new Date(),
+			},
+			{
+				where: {
+					id,
+				},
+			}
+		);
 	},
 };

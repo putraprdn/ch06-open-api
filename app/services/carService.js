@@ -92,4 +92,27 @@ module.exports = {
 			throw err;
 		}
 	},
+	async destroy(id, userInfo) {
+		try {
+			const userName = userInfo.username;
+
+			await carRepository.destroy(id, userName);
+			const carDeleted = await carRepository.find(id);
+
+			if (!carDeleted) throw new Error("Car Doesn't Exist");
+
+			return {
+				id: carDeleted.id,
+				isActive: carDeleted.isActive,
+				createdBy: carDeleted.createdBy,
+				updatedBy: carDeleted.updatedBy,
+				deletedBy: carDeleted.deletedBy,
+				deletedAt: carDeleted.deletedAt,
+				createdAt: carDeleted.createdAt,
+				updateAt: carDeleted.updatedAt,
+			};
+		} catch (err) {
+			throw err;
+		}
+	},
 };

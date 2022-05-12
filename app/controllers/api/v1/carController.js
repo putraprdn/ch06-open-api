@@ -65,4 +65,20 @@ module.exports = {
 				});
 			});
 	},
+	destroy(req, res) {
+		carService
+			.destroy(req.body.id, res.user)
+			.then((car) => {
+				res.status(200).json({
+					status: "OK",
+					data: car,
+				});
+			})
+			.catch((err) => {
+				res.status(422).json({
+					status: "FAIL",
+					message: err.message,
+				});
+			});
+	},
 };
