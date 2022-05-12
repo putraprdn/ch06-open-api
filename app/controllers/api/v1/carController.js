@@ -33,4 +33,20 @@ module.exports = {
 				});
 			});
 	},
+	update(req, res) {
+		carService
+			.update(req.params.id, req.body)
+			.then((car) => {
+				res.status(200).json({
+					status: "OK",
+					data: car,
+				});
+			})
+			.catch((err) => {
+				res.status(422).json({
+					status: "FAIL",
+					message: err.message,
+				});
+			});
+	},
 };

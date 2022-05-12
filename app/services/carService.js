@@ -37,4 +37,28 @@ module.exports = {
 			throw err;
 		}
 	},
+
+	async update(id, requestBody) {
+		try {
+			await carRepository.update(id, requestBody);
+			const carUpdated = await carRepository.find(id);
+			return {
+				id: carUpdated.id,
+				sizeId: carUpdated.sizeId,
+				name: carUpdated.name,
+				description: carUpdated.description,
+				price: carUpdated.price,
+				image: carUpdated.image,
+				isActive: carUpdated.isActive,
+				createdBy: carUpdated.createdBy,
+				updatedBy: carUpdated.updatedBy,
+				deletedBy: carUpdated.deletedBy,
+				deletedAt: carUpdated.deletedAt,
+				createdAt: carUpdated.createdAt,
+				updateAt: carUpdated.updatedAt,
+			};
+		} catch (err) {
+			throw err;
+		}
+	},
 };

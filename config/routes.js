@@ -31,8 +31,9 @@ apiRouter.post("/api/v1/register", controllers.api.v1.validatorController.valida
 apiRouter.get("/api/v1/whoami", controllers.api.v1.userController.checkToken,controllers.api.v1.userController.whoAmI);
 
 // Car endpoint
-apiRouter.post("/api/v1/car", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.create);
 apiRouter.get("/api/v1/cars", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.list);
+apiRouter.post("/api/v1/car", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.create);
+apiRouter.post("/api/v1/car/:id", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.update);
 
 
 module.exports = apiRouter;
