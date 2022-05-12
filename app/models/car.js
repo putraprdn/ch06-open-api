@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			sizeId: {
 				type: DataTypes.INTEGER,
-				allowNull: false,
+				defaultValue: 2,
 			},
 		},
 		{

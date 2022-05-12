@@ -30,4 +30,8 @@ apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
 apiRouter.post("/api/v1/register",controllers.api.v1.validatorController.validate(controllers.api.v1.validatorController.registerRules),controllers.api.v1.userController.register);
 apiRouter.get("/api/v1/whoami",controllers.api.v1.userController.checkToken,controllers.api.v1.userController.whoAmI);
 
+// Car endpoint
+apiRouter.post("/api/v1/cars", controllers.api.v1.userController.checkToken,controllers.api.v1.carController.create);
+
+
 module.exports = apiRouter;

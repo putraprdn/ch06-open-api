@@ -66,42 +66,4 @@ module.exports = {
 			},
 		};
 	},
-
-	//  checkToken(token) {
-	// 	if (!token) throw new Error("Please Provide a Token");
-
-	// 	if (token.toLowerCase().startsWith("bearer")) {
-	// 		token = token.slice("bearer".length).trim();
-	// 	}
-
-	// 	try {
-	// 		const jwtPayload = jwt.verify(
-	// 			token,
-	// 			process.env.ACCESS_TOKEN_SECRET
-	// 		);
-
-	// 		if (!jwtPayload) {
-	// 			throw new Error("Unauthorized");
-	// 		}
-
-	// 		return jwtPayload;
-	// 	} catch (err) {
-	// 		throw err;
-	// 	}
-	// },
-	// whoami(){
-	// 	try {
-	// 		const user =
-	// 	} catch (error) {
-
-	// 	}
-	// },
-	// changeRole(id, newRole) {
-	// 	try {
-
-	// 	} catch (error) {
-
-	// 	}
-	// 	return userRepository.changeRole(id, newRole)
-	// }
 };
