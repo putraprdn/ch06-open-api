@@ -38,8 +38,9 @@ module.exports = {
 		}
 	},
 
-	async update(id, requestBody) {
+	async update(requestBody) {
 		try {
+			const id = requestBody.id;
 			await carRepository.update(id, requestBody);
 			const carUpdated = await carRepository.find(id);
 

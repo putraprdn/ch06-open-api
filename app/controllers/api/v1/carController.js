@@ -35,7 +35,7 @@ module.exports = {
 	},
 	update(req, res) {
 		carService
-			.update(req.params.id, req.body)
+			.update(req.body)
 			.then((car) => {
 				res.status(200).json({
 					status: "OK",
@@ -51,7 +51,7 @@ module.exports = {
 	},
 	find(req, res) {
 		carService
-			.find(req.params.id)
+			.find(req.body.id)
 			.then((car) => {
 				res.status(200).json({
 					status: "OK",
