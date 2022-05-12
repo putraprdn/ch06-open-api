@@ -5,8 +5,10 @@
 
 const postController = require("./postController");
 const userController = require("./userController");
+const validatorController = require("./validatorController");
 
 module.exports = {
 	postController,
 	userController,
+	validatorController,
 };

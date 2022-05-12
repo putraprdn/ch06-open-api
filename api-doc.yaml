@@ -41,35 +41,13 @@ paths:
                                 data:
                                     type: "object"
                                     properties:
-                                        userCredential:
-                                            type: "object"
-                                            properties:
-                                                id:
-                                                    type: "integer"
-                                                name:
-                                                    type: "string"
-                                                username:
-                                                    type: "string"
-                                                email:
-                                                    type: "string"
-                                                password:
-                                                    type: "string"
-                                                isActive:
-                                                    type: "boolean"
-                                                roleId:
-                                                    type: "integer"
-                                                createdAt:
-                                                    type: "string"
-                                                    format: "date-time"
-                                                updatedAt:
-                                                    type: "string"
-                                                    format: "date-time"
+                                        userCredentials:
+                                            $ref: "#/definitions/userCredentials"
                                         token:
                                             type: "string"
-                                error:
-                                    type: "string"
                 "400":
                     description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
 
     /register:
         post:
@@ -112,10 +90,33 @@ paths:
                                 data:
                                     type: "object"
                                     properties:
-                                        isActive:
-                                            type: "boolean"
-                                        roleId:
-                                            type: "integer"
+                                        userCredentials:
+                                            $ref: "#/definitions/userCredentials"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+
+    /whoami:
+        get:
+            summary: "Who am I"
+            description: ""
+            produces:
+                - "application/json"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                success:
+                                    type: "boolean"
+                                    default: true
+                                message:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    properties:
                                         id:
                                             type: "integer"
                                         name:
@@ -124,15 +125,50 @@ paths:
                                             type: "string"
                                         email:
                                             type: "string"
-                                        password:
-                                            type: "string"
-                                        updatedAt:
-                                            type: "string"
-                                            format: "date-time"
-                                        createdAt:
-                                            type: "string"
-                                            format: "date-time"
-                                error:
-                                    type: "string"
                 "400":
                     description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+# Authorization
+securityDefinitions:
+    bearerAuth:
+        name: Authorization # arbitrary name for the security scheme
+        type: apiKey
+        scheme: bearer
+        in: header
+
+definitions:
+    # userResponse
+    userCredentials:
+        type: "object"
+        properties:
+            id:
+                type: "integer"
+            roleId:
+                type: "integer"
+            name:
+                type: "string"
+            username:
+                type: "string"
+            email:
+                type: "string"
+            isActive:
+                type: "boolean"
+            createdAt:
+                type: "string"
+                format: "date-time"
+            updatedAt:
+                type: "string"
+                format: "date-time"
+    # errorResponse
+    errorResponse:
+        schema:
+            items:
+                type: "object"
+                properties:
+                    error:
+                        type: "string"
+                    message:
+                        type: "string"

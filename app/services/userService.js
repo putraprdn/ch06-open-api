@@ -2,6 +2,8 @@ const userRepository = require("../repositories/userRepository"),
 	{ genSalt, hash, compareSync } = require("bcrypt"),
 	jwt = require("jsonwebtoken");
 
+require("dotenv").config();
+
 const cryptPassword = async (password) => {
 	const salt = await genSalt(12);
 
@@ -11,24 +13,34 @@ const cryptPassword = async (password) => {
 module.exports = {
 	async login(email, password) {
 		try {
-			const userCredential = await userRepository.login(email);
-			if (!userCredential) {
+			const userCredentials = await userRepository.login(email);
+			if (!userCredentials) {
 				throw new Error("User Not Found");
 			}
 
-			if (compareSync(password, userCredential.password)) {
+			if (compareSync(password, userCredentials.password)) {
 				const token = jwt.sign(
 					{
-						id: userCredential.id,
-						username: userCredential.username,
-						email: userCredential.email,
+						id: userCredentials.id,
+						name: userCredentials.name,
+						username: userCredentials.username,
+						email: userCredentials.email,
 					},
-					"rahasyah3h3h3",
+					process.env.ACCESS_TOKEN_SECRET,
 					{ expiresIn: "12h" }
 				);
 
 				return {
-					userCredential,
+					userCredentials: {
+						id: userCredentials.id,
+						roleId: userCredentials.roleId,
+						name: userCredentials.name,
+						username: userCredentials.username,
+						email: userCredentials.email,
+						isActive: userCredentials.isActive,
+						createdAt: userCredentials.createdAt,
+						updatedAt: userCredentials.updatedAt,
+					},
 					token,
 				};
 			}
@@ -40,6 +52,56 @@ module.exports = {
 	},
 	async register(reqBody) {
 		reqBody.password = await cryptPassword(reqBody.password);
-		return userRepository.register(reqBody);
+		userRegistered = await userRepository.register(reqBody);
+		return {
+			userCredentials: {
+				id: userRegistered.id,
+				roleId: userRegistered.roleId,
+				name: userRegistered.name,
+				username: userRegistered.username,
+				email: userRegistered.email,
+				isActive: userRegistered.isActive,
+				createdAt: userRegistered.createdAt,
+				updatedAt: userRegistered.updatedAt,
+			},
+		};
 	},
+
+	//  checkToken(token) {
+	// 	if (!token) throw new Error("Please Provide a Token");
+
+	// 	if (token.toLowerCase().startsWith("bearer")) {
+	// 		token = token.slice("bearer".length).trim();
+	// 	}
+
+	// 	try {
+	// 		const jwtPayload = jwt.verify(
+	// 			token,
+	// 			process.env.ACCESS_TOKEN_SECRET
+	// 		);
+
+	// 		if (!jwtPayload) {
+	// 			throw new Error("Unauthorized");
+	// 		}
+
+	// 		return jwtPayload;
+	// 	} catch (err) {
+	// 		throw err;
+	// 	}
+	// },
+	// whoami(){
+	// 	try {
+	// 		const user =
+	// 	} catch (error) {
+
+	// 	}
+	// },
+	// changeRole(id, newRole) {
+	// 	try {
+
+	// 	} catch (error) {
+
+	// 	}
+	// 	return userRepository.changeRole(id, newRole)
+	// }
 };
