@@ -7,7 +7,7 @@ host: "localhost:3000"
 basePath: "/api/v1"
 paths:
     # ---- USERS
-    /login:
+    /user/login:
         post:
             summary: "Login"
             description: ""
@@ -47,7 +47,7 @@ paths:
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
 
-    /register:
+    /user/register:
         post:
             summary: "Register"
             description: ""
@@ -117,6 +117,59 @@ paths:
                                             type: "string"
                                         email:
                                             type: "string"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    /user/update:
+        put:
+            summary: "Update user data by id"
+            description: ""
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "id"
+                          - "name"
+                          - "username"
+                          - "email"
+                          - "roleId"
+                      properties:
+                          id:
+                              type: "integer"
+                          name:
+                              type: "string"
+                              nullable: true
+                          username:
+                              type: "string"
+                              nullable: true
+                          email:
+                              type: "string"
+                              nullable: true
+                          roleId:
+                              type: "integer"
+                              nullable: true
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    properties:
+                                        userCredentials:
+                                            $ref: "#/definitions/userCredentials"
                 "400":
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
@@ -198,7 +251,24 @@ paths:
                                     $ref: "#/definitions/carProperties"
                 "400":
                     description: "Server Error"
-                    $ref: "#/definitions/errorResponse"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                message:
+                                    type: "array"
+                                    items:
+                                        type: "object"
+                                        properties:
+                                            msg:
+                                                type: "string"
+                                            param:
+                                                type: "string"
+                                            location:
+                                                type: "string"
+
             security:
                 - bearerAuth: []
 
@@ -256,7 +326,7 @@ paths:
     # Get car by id
     /car/find:
         post:
-            summary: "Update car data by id"
+            summary: "Find car by id"
             description: ""
             produces:
                 - "application/json"
@@ -282,12 +352,43 @@ paths:
                                     type: "string"
                                 data:
                                     type: "object"
-                                    properties:
-                                        cars:
-                                            type: "array"
-                                            items:
-                                                type: "object"
-                                                $ref: "#/definitions/carProperties"
+                                    $ref: "#/definitions/carProperties"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    # delete car by id
+    /car/delete:
+        post:
+            summary: "Soft delete car by changing isActive value to false"
+            description: "You can use this endpoint to take a peek any deleted car data by id"
+            produces:
+                - "application/json"
+            parameters:
+                - name: "body"
+                  in: "body"
+                  required: true
+                  schema:
+                      type: "object"
+                      required:
+                          - "id"
+                      properties:
+                          id:
+                              type: "integer"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    $ref: "#/definitions/carProperties"
                 "400":
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
@@ -356,6 +457,7 @@ definitions:
                 type: "string"
             updatedBy:
                 type: "string"
+                nullable: true
             deletedBy:
                 type: "string"
                 nullable: true
