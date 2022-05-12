@@ -6,6 +6,7 @@ info:
 host: "localhost:3000"
 basePath: "/api/v1"
 paths:
+    # USERS
     /login:
         post:
             summary: "Login"
@@ -33,10 +34,7 @@ paths:
                         items:
                             type: "object"
                             properties:
-                                success:
-                                    type: "boolean"
-                                    default: true
-                                message:
+                                status:
                                     type: "string"
                                 data:
                                     type: "object"
@@ -82,10 +80,7 @@ paths:
                         items:
                             type: "object"
                             properties:
-                                success:
-                                    type: "boolean"
-                                    default: true
-                                message:
+                                status:
                                     type: "string"
                                 data:
                                     type: "object"
@@ -109,10 +104,7 @@ paths:
                         items:
                             type: "object"
                             properties:
-                                success:
-                                    type: "boolean"
-                                    default: true
-                                message:
+                                status:
                                     type: "string"
                                 data:
                                     type: "object"
@@ -125,6 +117,67 @@ paths:
                                             type: "string"
                                         email:
                                             type: "string"
+                "400":
+                    description: "Server Error"
+                    $ref: "#/definitions/errorResponse"
+            security:
+                - bearerAuth: []
+
+    # CARS
+    /cars:
+        get:
+            summary: "Get car lists"
+            description: ""
+            produces:
+                - "application/json"
+            responses:
+                "200":
+                    description: "OK"
+                    schema:
+                        items:
+                            type: "object"
+                            properties:
+                                status:
+                                    type: "string"
+                                data:
+                                    type: "object"
+                                    properties:
+                                        cars:
+                                            type: "array"
+                                            items:
+                                                type: "object"
+                                                properties:
+                                                    id:
+                                                        type: "integer"
+                                                    sizeId:
+                                                        type: "integer"
+                                                    name:
+                                                        type: "string"
+                                                    description:
+                                                        type: "string"
+                                                    price:
+                                                        type: "integer"
+                                                    image:
+                                                        type: "string"
+                                                    isActive:
+                                                        type: "boolean"
+                                                    createdBy:
+                                                        type: "string"
+                                                    updatedBy:
+                                                        type: "string"
+                                                    deletedBy:
+                                                        type: "string"
+                                                        nullable: true
+                                                    deletedAt:
+                                                        type: "string"
+                                                        nullable: true
+                                                        format: "date-time"
+                                                    createdAt:
+                                                        type: "string"
+                                                        format: "date-time"
+                                                    updatedAt:
+                                                        type: "string"
+                                                        format: "date-time"
                 "400":
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
