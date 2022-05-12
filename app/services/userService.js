@@ -51,9 +51,9 @@ module.exports = {
 			throw err;
 		}
 	},
-	async register(reqBody) {
-		reqBody.password = await cryptPassword(reqBody.password);
-		userRegistered = await userRepository.register(reqBody);
+	async register(requestBody) {
+		requestBody.password = await cryptPassword(requestBody.password);
+		userRegistered = await userRepository.register(requestBody);
 		return {
 			userCredentials: {
 				id: userRegistered.id,
@@ -74,6 +74,43 @@ module.exports = {
 			if (!verified) throw new Error("Unauthorized Access");
 
 			res.user = verified;
+		} catch (err) {
+			throw err;
+		}
+	},
+	async isSuperAdmin(userInfo) {
+		try {
+			const verified = await userRepository.isSuperAdmin(userInfo.id);
+
+			if (!verified) throw new Error("Unauthorized Access");
+
+			res.user = verified;
+		} catch (err) {
+			throw err;
+		}
+	},
+
+	async update(requestBody) {
+		try {
+			const id = requestBody.id;
+			await userRepository.update(id, requestBody);
+			
+			const userUpdated = await userRepository.find(id);
+
+			if (!userUpdated) throw new Error("User Doesn't Exist");
+
+			return {
+				userCredentials: {
+					id: userUpdated.id,
+					roleId: userUpdated.roleId,
+					name: userUpdated.name,
+					username: userUpdated.username,
+					email: userUpdated.email,
+					isActive: userUpdated.isActive,
+					createdAt: userUpdated.createdAt,
+					updatedAt: userUpdated.updatedAt,
+				},
+			};
 		} catch (err) {
 			throw err;
 		}

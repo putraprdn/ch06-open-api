@@ -9,8 +9,8 @@ module.exports = {
 			},
 		});
 	},
-	register(reqBody) {
-		return User.create(reqBody);
+	register(requestBody) {
+		return User.create(requestBody);
 	},
 	isAdmin(id) {
 		return User.findOne({
@@ -21,5 +21,31 @@ module.exports = {
 				},
 			},
 		});
+	},
+	update(id, requestBody) {
+		return User.update(
+			{
+				name: requestBody.name,
+				username: requestBody.username,
+				email: requestBody.email,
+				roleId: requestBody.roleId,
+			},
+			{
+				where: {
+					id,
+				},
+			}
+		);
+	},
+	isSuperAdmin(id) {
+		return User.findOne({
+			where: {
+				id,
+				roleId: 1,
+			},
+		});
+	},
+	find(id) {
+		return User.findByPk(id);
 	},
 };

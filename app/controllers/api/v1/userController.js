@@ -44,6 +44,7 @@ module.exports = {
 		});
 	},
 
+	// Middleware
 	checkToken(req, res, next) {
 		try {
 			let token = req.headers.authorization;
@@ -70,6 +71,8 @@ module.exports = {
 			});
 		}
 	},
+
+	// Middleware
 	async isAdmin(req, res, next) {
 		try {
 			await userService.isAdmin(res.user);
@@ -81,21 +84,33 @@ module.exports = {
 			});
 		}
 	},
+
+	// Middleware
+	async isSuperAdmin(req, res, next) {
+		try {
+			await userService.isSuperAdmin(res.user);
+			next();
+		} catch (err) {
+			res.status(422).json({
+				status: "FAIL",
+				message: err.message,
+			});
+		}
+	},
+	update(req, res) {
+		userService
+			.update(req.body)
+			.then((user) => {
+				res.status(200).json({
+					status: "OK",
+					data: user,
+				});
+			})
+			.catch((err) => {
+				res.status(422).json({
+					status: "FAIL",
+					message: err.message,
+				});
+			});
+	},
 };
-// changeRole(req, res) {
-// 	userService
-// 		.changeRole(req.params.id, req.body)
-// 		.then((user) => {
-// 			res.status(200).json({
-// 				status: "OK",
-// 				data: user,
-// 			});
-// 		})
-// 		.catch((err) => {
-// 			res.status(422).json({
-// 				status: "FAIL",
-// 				message: err.message,
-// 			});
-// 		});
-// },
-// };

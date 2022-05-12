@@ -26,16 +26,17 @@ apiRouter.get("/api/v1/posts/:id", controllers.api.v1.postController.show);
 apiRouter.delete("/api/v1/posts/:id",controllers.api.v1.postController.destroy);
 
 // User endpoint
-apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
-apiRouter.post("/api/v1/register", controllers.api.v1.validatorController.validate(controllers.api.v1.validatorController.registerRules), controllers.api.v1.userController.register);
-apiRouter.get("/api/v1/whoami", controllers.api.v1.userController.checkToken,controllers.api.v1.userController.whoAmI);
+apiRouter.post("/api/v1/user/login", controllers.api.v1.userController.login);
+apiRouter.post("/api/v1/user/register", controllers.api.v1.validatorController.validate(controllers.api.v1.validatorController.registerRules), controllers.api.v1.userController.register);
+apiRouter.get("/api/v1/user/whoami", controllers.api.v1.userController.checkToken,controllers.api.v1.userController.whoAmI);
+apiRouter.put("/api/v1/user/update", controllers.api.v1.userController.checkToken,controllers.api.v1.userController.isSuperAdmin,controllers.api.v1.userController.update);
 
 // Car endpoint
 apiRouter.get("/api/v1/cars", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.list);
 apiRouter.post("/api/v1/car/create", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.create);
 apiRouter.put("/api/v1/car/update", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.update);
 apiRouter.post("/api/v1/car/find", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.find);
-apiRouter.put("/api/v1/car/delete", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.destroy);
+apiRouter.post("/api/v1/car/delete", controllers.api.v1.userController.checkToken, controllers.api.v1.userController.isAdmin, controllers.api.v1.carController.destroy);
 
 
 module.exports = apiRouter;
