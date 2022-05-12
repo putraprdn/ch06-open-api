@@ -42,6 +42,9 @@ module.exports = {
 		try {
 			await carRepository.update(id, requestBody);
 			const carUpdated = await carRepository.find(id);
+
+			if(!carUpdated) throw new Error("Car Doesn't Exist")
+
 			return {
 				id: carUpdated.id,
 				sizeId: carUpdated.sizeId,
@@ -56,6 +59,31 @@ module.exports = {
 				deletedAt: carUpdated.deletedAt,
 				createdAt: carUpdated.createdAt,
 				updateAt: carUpdated.updatedAt,
+			};
+		} catch (err) {
+			throw err;
+		}
+	},
+	async find(id) {
+		try {
+			const car = await carRepository.find(id);
+
+			if(!car) throw new Error("Car Doesn't Exist");
+
+			return {
+				id: car.id,
+				sizeId: car.sizeId,
+				name: car.name,
+				description: car.description,
+				price: car.price,
+				image: car.image,
+				isActive: car.isActive,
+				createdBy: car.createdBy,
+				updatedBy: car.updatedBy,
+				deletedBy: car.deletedBy,
+				deletedAt: car.deletedAt,
+				createdAt: car.createdAt,
+				updateAt: car.updatedAt,
 			};
 		} catch (err) {
 			throw err;

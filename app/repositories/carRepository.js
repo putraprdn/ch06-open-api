@@ -1,12 +1,8 @@
-const req = require("express/lib/request");
 const { Car } = require("../models");
 
 module.exports = {
 	list() {
 		return Car.findAll();
-	},
-	find(id) {
-		return Car.findByPk(id);
 	},
 	create(requestBody) {
 		return Car.create(requestBody);
@@ -26,5 +22,8 @@ module.exports = {
 				},
 			}
 		);
+	},
+	find(id) {
+		return Car.findByPk(id);
 	},
 };
