@@ -97,7 +97,7 @@ module.exports = {
 			const userName = userInfo.username;
 
 			await carRepository.destroy(id, userName);
-			const carDeleted = await carRepository.find(id);
+			const carDeleted = await carRepository.sneakPeek(id);
 
 			if (!carDeleted) throw new Error("Car Doesn't Exist");
 

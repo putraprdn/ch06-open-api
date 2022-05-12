@@ -9,9 +9,8 @@ function validate(validations) {
 			return next();
 		}
 		return res.status(400).json({
-			success: false,
-			error: 400,
-			messages: errors.array(),
+			status: "FAIL",
+			message: errors.array(),
 		});
 	};
 }
@@ -27,4 +26,11 @@ const registerRules = [
 	body("password").notEmpty().withMessage("Password is Required"),
 ];
 
-module.exports = { validate, registerRules };
+const CreateCarRules = [
+	body("name").notEmpty().withMessage.apply("Name is Required"),
+	body("description").notEmpty().withMessage("Description is Required"),
+	body("price").notEmpty().withMessage("Price is Required"),
+	body("image").notEmpty().withMessage("Image is Required"),
+];
+
+module.exports = { validate, registerRules, CreateCarRules };
