@@ -1,6 +1,17 @@
 const carRepository = require("../repositories/carRepository");
 
 module.exports = {
+	async list() {
+		try {
+			const cars = await carRepository.list();
+			return {
+				data: cars,
+			};
+		} catch (err) {
+			throw err;
+		}
+	},
+
 	async create(requestBody, userInfo) {
 		try {
 			requestBody.createdBy = userInfo.username;

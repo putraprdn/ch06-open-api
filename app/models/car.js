@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Car.init(
 		{
+			sizeId: {
+				type: DataTypes.INTEGER,
+				defaultValue: 2,
+			},
 			name: {
 				type: DataTypes.STRING,
 				allowNull: false,
@@ -47,10 +51,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			deletedAt: {
 				type: DataTypes.STRING,
-			},
-			sizeId: {
-				type: DataTypes.INTEGER,
-				defaultValue: 2,
 			},
 		},
 		{
