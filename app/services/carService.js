@@ -15,7 +15,7 @@ module.exports = {
 	async create(requestBody, userInfo) {
 		try {
 			requestBody.createdBy = userInfo.username;
-			requestBody.updatedBy = userInfo.username;
+			// requestBody.updatedBy = userInfo.username;
 
 			const cars = await carRepository.create(requestBody);
 			return {
@@ -38,13 +38,15 @@ module.exports = {
 		}
 	},
 
-	async update(requestBody) {
+	async update(requestBody, userInfo) {
 		try {
 			const id = requestBody.id;
-			await carRepository.update(id, requestBody);
+			const userName = userInfo.username;
+
+			await carRepository.update(id, userName, requestBody);
 			const carUpdated = await carRepository.find(id);
 
-			if(!carUpdated) throw new Error("Car Doesn't Exist")
+			if (!carUpdated) throw new Error("Car Doesn't Exist");
 
 			return {
 				id: carUpdated.id,
@@ -69,7 +71,7 @@ module.exports = {
 		try {
 			const car = await carRepository.find(id);
 
-			if(!car) throw new Error("Car Doesn't Exist");
+			if (!car) throw new Error("Car Doesn't Exist");
 
 			return {
 				id: car.id,

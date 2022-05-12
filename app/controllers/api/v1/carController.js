@@ -35,7 +35,7 @@ module.exports = {
 	},
 	update(req, res) {
 		carService
-			.update(req.body)
+			.update(req.body, res.user)
 			.then((car) => {
 				res.status(200).json({
 					status: "OK",

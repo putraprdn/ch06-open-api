@@ -7,7 +7,7 @@ module.exports = {
 	create(requestBody) {
 		return Car.create(requestBody);
 	},
-	update(id, reqBody) {
+	update(id, user, reqBody) {
 		return Car.update(
 			{
 				name: reqBody.name,
@@ -15,6 +15,7 @@ module.exports = {
 				price: reqBody.price,
 				sizeId: reqBody.sizeId,
 				image: reqBody.image,
+				updatedBy: user,
 			},
 			{
 				where: {
