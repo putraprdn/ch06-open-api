@@ -91,7 +91,7 @@ paths:
                     description: "Server Error"
                     $ref: "#/definitions/errorResponse"
 
-    /whoami:
+    /user/whoami:
         get:
             summary: "Who am I"
             description: ""
