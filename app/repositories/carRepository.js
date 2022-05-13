@@ -52,10 +52,6 @@ module.exports = {
 		);
 	},
 	sneakPeek(id) {
-		return Car.findOne({
-			where: {
-				id,
-			},
-		});
+		return Car.findByPk(id);
 	},
 };

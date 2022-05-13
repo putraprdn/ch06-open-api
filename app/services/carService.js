@@ -96,6 +96,26 @@ module.exports = {
 		try {
 			const userName = userInfo.username;
 
+			const isActive = await carRepository.find(id);
+
+			// if car already deleted it won't update the "deletedAt" column
+			if (!isActive) {
+				const carAlreadyDeleted = await carRepository.sneakPeek(id);
+
+				if (!carAlreadyDeleted) throw new Error("Car Doesn't Exist");
+
+				return {
+					id: carAlreadyDeleted.id,
+					isActive: carAlreadyDeleted.isActive,
+					createdBy: carAlreadyDeleted.createdBy,
+					updatedBy: carAlreadyDeleted.updatedBy,
+					deletedBy: carAlreadyDeleted.deletedBy,
+					deletedAt: carAlreadyDeleted.deletedAt,
+					createdAt: carAlreadyDeleted.createdAt,
+					updateAt: carAlreadyDeleted.updatedAt,
+				};
+			}
+
 			await carRepository.destroy(id, userName);
 			const carDeleted = await carRepository.sneakPeek(id);
 
